@@ -12,15 +12,21 @@ app.use(express.json());
 mongoose
   .connect("mongodb://127.0.0.1:27017/moviereviews")
   .then(() => {
-    console.log("Connected to MongoDB");
+    console.log("Connected");
   })
   .catch((err) => {
     console.error("Could not connect to MongoDB:", err);
   });
 
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
 const authenticateJWT = (req, res, next) => {
-  const token = req.headers.authorization;
+  const token = req.headers["authorization"].replace("Bearer ", "");
   if (token) {
+    console.log(token);
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
       if (err) {
         return res.sendStatus(403);
@@ -55,7 +61,7 @@ app.post("/login", async (req, res) => {
   if (user && (await bcrypt.compare(password, user.password))) {
     const token = jwt.sign(
       { id: user._id, role: user.role },
-      "ACCESS_TOKEN_SECRET",
+      process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "1h" }
     );
     res.json({ token });
@@ -64,7 +70,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.post("/movies", async (req, res) => {
+app.post("/movies", authenticateJWT, async (req, res) => {
   const movie = new Movie(req.body);
   await movie.save();
   res.status(201).send(movie);
@@ -123,9 +129,4 @@ app.put("/reviews/:id", async (req, res) => {
 app.delete("/reviews/:id", async (req, res) => {
   await Review.findByIdAndDelete(req.params.id);
   res.status(204).send();
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
 });
