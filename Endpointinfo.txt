@@ -1,0 +1,123 @@
+------------Register User:
+
+URL: http://localhost:3000/auth/register
+Method: POST
+Body:
+{
+  "username": "Username",
+  "email": "Email@hotmail.com",
+  "password": "Password"
+}
+
+
+------------Login User:
+
+URL: http://localhost:3000/auth/login
+Method: POST
+Body:
+{
+  "email": "yourEmail@example.com",
+  "password": "yourPassword"
+}
+
+
+------------Create Movie:
+
+URL: http://localhost:3000/movies
+Method: POST
+
+Headers:
+Authorization: Bearer yourJWTToken
+
+Body:
+{
+  "title": "Movie",
+  "director": "Name",
+  "releaseYear": 2021,
+  "genre": "Action"
+}
+
+
+------------Get All Movies:
+
+URL: http://localhost:3000/movies
+Method: GET
+
+
+-----------Get Movie by ID:
+
+URL: http://localhost:3000/movies/:id
+Method: GET
+
+
+-------------Update Movie:
+
+http://localhost:3000/movies/:id
+Method: PUT
+
+Body:
+{
+  "title": "Updated Movie Title",
+  "director": "Updated Director Name",
+  "releaseYear": 2022,
+  "genre": "Drama"
+}
+
+
+--------------Delete Movie
+
+URL: http://localhost:3000/movies/:id
+Method: DELETE
+
+
+--------------Create Review
+
+URL: http://localhost:3000/reviews
+Method: POST
+
+Headers:
+Authorization: Bearer yourJWTToken
+
+Body:
+{
+  "movieId": "movieId",
+  "rating": 8,
+  "comment": "Great movie!"
+}
+
+
+----------Get All Reviews
+
+URL: http://localhost:3000/reviews
+Method: GET
+
+
+--------Get Reviews by Movie ID
+
+URL: http://localhost:3000/movies/:id/reviews
+Method: GET
+
+
+-------------Get Review by ID
+
+URL: http://localhost:3000/reviews/:id
+Method: GET
+
+
+-------------Update Review
+
+URL: http://localhost:3000/reviews/:id
+Method: PUT
+
+Body:
+{
+  "movieId": "movieId",
+  "rating": 9,
+  "comment": "Amazing movie!"
+}
+
+
+--------------Delete Review
+
+URL: http://localhost:3000/reviews/:id
+Method: DELETE

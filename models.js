@@ -18,7 +18,7 @@ const movieSchema = new Schema({
 const reviewSchema = new Schema({
   movieId: { type: Schema.Types.ObjectId, ref: "Movie", required: true },
   userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
-  rating: { type: Number, required: true, min: 1, max: 5 },
+  rating: { type: Number, required: true, min: 1, max: 10 },
   comment: { type: String, required: true },
   createdAt: { type: Date, default: Date.now },
 });
